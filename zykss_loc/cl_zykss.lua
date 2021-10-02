@@ -72,9 +72,8 @@ Citizen.CreateThread(function()
             local plyCoords = GetEntityCoords(GetPlayerPed(-1), false)
             local dist = Vdist(plyCoords.x, plyCoords.y, plyCoords.z, position[k].x, position[k].y, position[k].z)
 
-            if dist <= 10.0 then
+            if dist <= 8.0 then
             wait = 0
-			DrawMarker(20, -1037.96, -2738.03, 20.16, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.7, 0.7, 0.7, 0, 124, 255, 255, 1, 2, 0, nil, nil, 0)
 
         
             if dist <= 1.0 then
@@ -106,4 +105,48 @@ AddEventHandler('g:spawnCar', function(car)
 	TaskWarpPedIntoVehicle(playerPed, vehicle, -1)
     SetEntityAsMissionEntity(vehicle, true, true)
     SetPedIntoVehicle(GetPlayerPed(-1),vehicle,-1)
+end)
+
+Citizen.CreateThread(function()
+    local hash = GetHashKey("s_m_m_highsec_01")
+    while not HasModelLoaded(hash) do
+    RequestModel(hash)
+    Wait(20)
+	end
+	ped = CreatePed("PED_TYPE_CIVMALE", "s_m_m_highsec_01", -1037.18, -2738.52, 19.16, 52.46, false, true)
+	loadAnimDict( "amb@world_human_tourist_map@male@base" )
+	TaskPlayAnim( ped, "amb@world_human_tourist_map@male@base", "base", 8.0, 1.0, -1, 51, 0, 0, 0, 0 )
+	AddPropToPed("prop_cs_tablet", 28422, 0.0, -0.03, 0.0, 20.0, -90.0, 0.0)
+	SetBlockingOfNonTemporaryEvents(ped, true)
+	FreezeEntityPosition(ped, true)
+    SetEntityInvincible(ped, true)
+end)
+
+function loadAnimDict(dict)
+	while not HasAnimDictLoaded(dict) do
+	  RequestAnimDict(dict)
+	  Wait(10)
+	end
+end
+
+function AddPropToPed(prop1, bone, off1, off2, off3, rot1, rot2, rot3)
+	local x,y,z = table.unpack(GetEntityCoords(ped))
+  
+	  ESX.Streaming.RequestModel(prop1)
+  
+	prop = CreateObject(GetHashKey(prop1), x, y, z+0.2,  true,  true, true)
+	AttachEntityToEntity(prop, ped, GetPedBoneIndex(ped, bone), off1, off2, off3, rot1, rot2, rot3, true, true, false, true, 1, true)
+	PedHasProp = true
+	SetModelAsNoLongerNeeded(prop1)
+end
+
+Citizen.CreateThread(function()
+    local locmap = AddBlipForCoord(-1038.01, -2737.84, 19.16)
+    SetBlipSprite(locmap, 523)
+    SetBlipColour(locmap, 2)
+    SetBlipScale(locmap, 0.80)
+    SetBlipAsShortRange(locmap, true)
+    BeginTextCommandSetBlipName('STRING')
+    AddTextComponentString("~b~Location")
+    EndTextCommandSetBlipName(locmap)
 end)
