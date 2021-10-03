@@ -28,7 +28,7 @@ function ZykssLoc()
 
 				RageUI.Button("Panto                                                ~g~750$", nil, {RightBadge = RageUI.BadgeStyle.Car}, true , {
 					onSelected = function()
-						TriggerServerEvent('location:panto',2500)
+						TriggerServerEvent('location:panto',750)
 						open = false
 					end
 				})
@@ -36,7 +36,7 @@ function ZykssLoc()
 				
 				RageUI.Button("Scooter                                             ~g~500$", nil, {RightBadge = RageUI.BadgeStyle.Bike}, true , {
 					onSelected = function()
-						TriggerServerEvent('location:scoot',1000)
+						TriggerServerEvent('location:scoot',500)
 						open = false
 					end
 				})
@@ -44,7 +44,7 @@ function ZykssLoc()
 
 				RageUI.Button("BMX                                                  ~g~250$", nil, {RightBadge = RageUI.BadgeStyle.Bike}, true , {
 					onSelected = function()
-						TriggerServerEvent('location:bmx',500)
+						TriggerServerEvent('location:bmx',250)
 						open = false
 					end
 				})
